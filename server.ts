@@ -3,8 +3,8 @@
 import * as remixBuild from 'virtual:remix/server-build';
 import {
   createRequestHandler,
-  getStorefrontHeaders,
-} from '@shopify/remix-oxygen';
+//  getStorefrontHeaders,
+} from '@remix-run/cloudflare';
 import {
   cartGetIdDefault,
   cartSetIdDefault,
@@ -51,7 +51,13 @@ export default {
         privateStorefrontToken: env.PRIVATE_STOREFRONT_API_TOKEN,
         storeDomain: env.PUBLIC_STORE_DOMAIN,
         storefrontId: env.PUBLIC_STOREFRONT_ID,
-        storefrontHeaders: getStorefrontHeaders(request),
+        storefrontHeaders: {
+          // Pass a buyerIp to prevent being flagged as a bot
+          requestGroupId: request.headers.get("request-id"),
+          buyerIp: request.headers.get("CF-Connecting-IP") || "",
+          cookie: request.headers.get('cookie'),  // Required for Shopify Analytics
+          purpose: request.headers.get('purpose'), // Used for debugging purposes
+        },
       });
 
       /**

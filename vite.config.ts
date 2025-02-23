@@ -1,13 +1,23 @@
 import {defineConfig} from 'vite';
 import {hydrogen} from '@shopify/hydrogen/vite';
-import {oxygen} from '@shopify/mini-oxygen/vite';
-import {vitePlugin as remix} from '@remix-run/dev';
+import {
+  vitePlugin as remix,
+  cloudflareDevProxyVitePlugin,
+} from '@remix-run/dev';
 import tsconfigPaths from 'vite-tsconfig-paths';
+
+declare module "@remix-run/cloudflare" {
+  interface Future {
+    v3_singleFetch: true;
+  }
+}
 
 export default defineConfig({
   plugins: [
     hydrogen(),
-    oxygen(),
+    cloudflareDevProxyVitePlugin({
+      getLoadContext,
+    }),
     remix({
       presets: [hydrogen.preset()],
       future: {
@@ -20,9 +30,16 @@ export default defineConfig({
     tsconfigPaths(),
   ],
   ssr: {
-    optimizeDeps: {
-      include: ['typographic-base'],
+    resolve: {
+      conditions: ["workerd", "worker", "browser"],
     },
+  },
+  resolve: {
+    mainFields: ["browser", "module", "main"],
+  },
+  build: {
+    assetsInlineLimit: 0,
+    minify: true,
   },
   optimizeDeps: {
     include: [
@@ -34,10 +51,5 @@ export default defineConfig({
       'react-use/esm/useDebounce',
       'react-use/esm/useWindowScroll',
     ],
-  },
-  build: {
-    // Allow a strict Content-Security-Policy
-    // withtout inlining assets as base64:
-    assetsInlineLimit: 0,
   },
 });

@@ -1,4 +1,4 @@
-import {json} from '@shopify/remix-oxygen';
+import {json} from '@remix-run/cloudflare';
 
 import {CACHE_LONG} from '~/data/cache';
 import {countries} from '~/data/countries';

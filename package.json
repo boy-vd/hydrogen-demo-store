@@ -21,12 +21,12 @@
   "prettier": "@shopify/prettier-config",
   "dependencies": {
     "@headlessui/react": "^1.7.2",
+    "@remix-run/cloudflare": "^2.15.3",
     "@remix-run/node": "^2.15.3",
     "@remix-run/react": "^2.15.3",
     "@remix-run/server-runtime": "^2.15.3",
     "@shopify/cli": "^3.74.1",
     "@shopify/hydrogen": "^2025.1.1",
-    "@shopify/remix-oxygen": "^2.0.10",
     "clsx": "^1.2.1",
     "cross-env": "^7.0.3",
     "graphql": "^16.6.0",

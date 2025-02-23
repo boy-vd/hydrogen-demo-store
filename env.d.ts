@@ -1,6 +1,6 @@
 /// <reference types="vite/client" />
-/// <reference types="@shopify/remix-oxygen" />
-/// <reference types="@shopify/oxygen-workers-types" />
+/// <reference types="@remix-run/cloudflare" />
+/// <reference types="@cloudflare/workers-types" />
 
 import type {
   WithCache,
@@ -32,7 +32,7 @@ declare global {
   }
 }
 
-declare module '@shopify/remix-oxygen' {
+declare module '@remix-run/cloudflare' {
   /**
    * Declare local additions to the Remix loader context.
    */

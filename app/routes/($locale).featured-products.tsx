@@ -1,4 +1,4 @@
-import {json, type LoaderFunctionArgs} from '@shopify/remix-oxygen';
+import {json, type LoaderFunctionArgs} from '@remix-run/cloudflare';
 import invariant from 'tiny-invariant';
 
 import {
